@@ -17,4 +17,12 @@ public class Celda {
     public boolean tieneMina() {
         return tieneMina;
     }
+
+    public void revelar() {
+        this.revelado = true;
+    }
+
+    public boolean estaRevelado() {
+        return revelado;
+    }
 }
