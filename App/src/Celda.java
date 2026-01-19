@@ -27,8 +27,9 @@ public class Celda  implements InterfazCelda{
         return revelado;
     }
 
-    public void marcar() {
+    public boolean marcar() {
         this.marcado = (this.marcado ? true : false);
+        return marcado;
     }
 
     public boolean estaMarcado() {

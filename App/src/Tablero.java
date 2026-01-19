@@ -46,9 +46,11 @@ public class Tablero{
         }
     }
 
-    public void marcarCelda(int coordenadaY, int coordenadaX){
-        tablero[coordenadaY][coordenadaX].marcar();
-        celdasMarcadas++;
+    public boolean marcarCelda(int coordenadaY, int coordenadaX){
+        boolean marcado = tablero[coordenadaY - 1][coordenadaX - 1].marcar();
+        celdasMarcadas = (marcado ? celdasMarcadas++ : celdasMarcadas--);
+        
+        return marcado;
     }
 
     public int getMinasRestantes(){
@@ -61,6 +63,10 @@ public class Tablero{
 
     public int getTotalMinas(){
         return totalMinas;
+    }
+
+    public int getCeldasFaltantes(){
+        return (tablero.length * tablero[0].length) - celdasMarcadas;
     }
 
     //For testing purposes only, will be removed later
