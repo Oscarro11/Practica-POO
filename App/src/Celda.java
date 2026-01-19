@@ -1,5 +1,6 @@
-public class Celda {
+public class Celda  implements InterfazCelda{
     private boolean revelado = false;
+    private boolean marcado = false;
     private boolean tieneMina;
 
     public Celda(boolean tieneMina) {
@@ -24,5 +25,13 @@ public class Celda {
 
     public boolean estaRevelado() {
         return revelado;
+    }
+
+    public void marcar() {
+        this.marcado = (this.marcado ? true : false);
+    }
+
+    public boolean estaMarcado() {
+        return marcado;
     }
 }

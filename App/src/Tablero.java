@@ -1,62 +1,70 @@
 public class Tablero{
     private Celda[][] tablero;
-    private int minas;
+    private int totalMinas;
+    private int celdasMarcadas;
 
     public Tablero(int filas, int columnas) {
         this.tablero = new Celda[filas][columnas];
-        this.minas = 0;
+        this.celdasMarcadas = 0;
+
+        generarMinas();
     }
 
-    public void generarMinas(){
+    private void generarMinas(){
         for (int i = 0; i < tablero.length; i++) {
             for (int j = 0; j < tablero[i].length; j++) {
                 if (Math.random() < 0.2) { 
                     tablero[i][j] = new Celda(true);
-                    minas++;
-                } else {
+                    totalMinas++;
+                } 
+                else {
                     tablero[i][j] = new Celda(false);
                 }
             }
         }
     }
-    public void minasEncontradas(){
-        int minasEncontradas = 0;
-        for (int i = 0; i < tablero.length; i++) {
-            for (int j = 0; j < tablero[i].length; j++) {
-                if (tablero[i][j].estaRevelado() && tablero[i][j].tieneMina()) {
-                    minasEncontradas++;
-                }
-            }
-        }
-        System.out.println("Minas encontradas: " + minasEncontradas);
-    }
-    public void revelar(int filas, int columnas){
-        Celda celda = tablero[filas][columnas];
+
+    public int revelar(int coordenadaY, int coordenadaX){
+        coordenadaX--;
+        coordenadaY--;
+
+        Celda celda = tablero[coordenadaY][coordenadaX];
         celda.revelar();
         if(celda.tieneMina()){
-            System.out.println("¡Explotaste una mina!");
-        } else{
+            return -1;
+        } 
+        else{
             int minasCercanas = 0;
-            for (int i = Math.max(0, filas - 1); i <= Math.min(tablero.length - 1, filas + 1); i++) {
-                for (int j = Math.max(0, columnas - 1); j <= Math.min(tablero[i].length - 1, columnas + 1); j++) {
+            for (int i = Math.max(0, coordenadaY - 1); i <= Math.min(tablero.length - 1, coordenadaY + 1); i++) {
+                for (int j = Math.max(0, coordenadaX - 1); j <= Math.min(tablero[i].length - 1, coordenadaX + 1); j++) {
                     if (tablero[i][j].tieneMina()) {
                         minasCercanas++;
                     }
                 }
             }
-            System.out.println("Minas cercanas: " + minasCercanas);
+            return minasCercanas;
         }
-    }
-    public void minasRestantes(){
-        int minasRestantes = 0;
-        for (int i = 0; i < tablero.length; i++) {
-            for (int j = 0; j < tablero[i].length; j++) {
-                if (!tablero[i][j].estaRevelado() && tablero[i][j].tieneMina()) {
-                    minasRestantes++;
-                }
-            }
-        }
-        System.out.println("Minas restantes: " + minasRestantes);
     }
 
+    public void marcarCelda(int coordenadaY, int coordenadaX){
+        tablero[coordenadaY][coordenadaX].marcar();
+        celdasMarcadas++;
+    }
+
+    public int getMinasRestantes(){
+        return totalMinas - celdasMarcadas;
+    }
+
+    public int getMinasEncontradas(){
+        return celdasMarcadas;
+    }
+
+    public int getTotalMinas(){
+        return totalMinas;
+    }
+
+    //For testing purposes only, will be removed later
+    public boolean getCeldaStatus(int coordenadaY, int coordenadaX){
+        return tablero[coordenadaY - 1][coordenadaX - 1].tieneMina();
+    }
 }
