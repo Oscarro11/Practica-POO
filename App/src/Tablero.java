@@ -48,7 +48,7 @@ public class Tablero{
 
     public boolean marcarCelda(int coordenadaY, int coordenadaX){
         boolean marcado = tablero[coordenadaY - 1][coordenadaX - 1].marcar();
-        celdasMarcadas = (marcado ? celdasMarcadas++ : celdasMarcadas--);
+        celdasMarcadas += (marcado ? 1 : -1);
         
         return marcado;
     }

@@ -28,7 +28,7 @@ public class Celda  implements InterfazCelda{
     }
 
     public boolean marcar() {
-        this.marcado = (this.marcado ? true : false);
+        this.marcado = (this.marcado ? false : true);
         return marcado;
     }
 
